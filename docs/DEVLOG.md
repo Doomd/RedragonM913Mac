@@ -42,3 +42,5 @@
 - **Profiles (v0.3):** Save/load named collections of button mappings as local JSON profiles, with a built-in Factory Default profile.
 - **DPI buttons note (pinned for later):** The two physical DPI+/DPI- buttons behind the scroll wheel are hardcoded in firmware (not in the 16-button remap table; even Redragon's Windows software cannot remap them). **Workaround:** add a **"Lock DPI"** option that sets active DPI stage count to 1 (or sets all 5 DPI slots to the same preferred DPI) so accidental presses don't change cursor speed.
 - **Extra features:** Key combos (e.g. `cmd+c`), media keys, and LED control.
+- **Public docs & onboarding:** Position clearly as a macOS-native tool (not tested on Windows), add screenshots/usage guide, add a `LICENSE`, and include an **AI/LLM-friendly install prompt** (or `llms.txt`) so users can hand setup directly to their coding agent.
+- **macOS Distribution:** Consider a paid Apple Developer account (\$99/yr) to code-sign (**Developer ID Application**) and **notarize** `.app` / `.dmg` builds via Tauri + GitHub Actions Releases (eliminates Gatekeeper warnings and preserves macOS Input Monitoring permission across updates).
