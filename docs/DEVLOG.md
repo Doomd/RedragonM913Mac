@@ -27,6 +27,7 @@
 - **Remap (`./target/debug/m913-mac remap side11=option side12=control`):** Successfully remapped `side11` → macOS **Option** (Left Alt `0x04`) and `side12` → macOS **Control** (Left Ctrl `0x01`), preserving all other buttons and committing to onboard memory. Verified both modifiers work natively on macOS.
 
 ### Next Steps
-- Expand action support (full keyboard keys, combos like `cmd+c`, media keys, `fire` button remapping, DPI/LED).
-- Refactor `src/protocol.rs` and `src/device.rs` into a shared library crate (`lib.rs`).
-- Build a simple Tauri desktop app on top of the Rust library (with `images/side.webp` and `images/top.webp` as visual button layout references).
+- **Tauri UI (v0.2):** Cropped copies of `images/side.webp` and `images/top.webp` (cable/dongle removed) with interactive SVG circle callouts (white = factory default, green = remapped). Clicking any button lets you remap it (standard keys, macOS modifiers, mouse actions, disabled) or reset that button to default, plus one-click **Reset All to Factory Defaults**.
+- **Profiles:** Save/load named collections of button mappings as local JSON profiles, always keeping a built-in Factory Default profile.
+- **DPI buttons note (pinned for later):** The two physical DPI+/DPI- buttons behind the scroll wheel are hardcoded in firmware (not in the 16-button remap table; even Redragon's Windows software cannot remap them). **Workaround:** add a **"Lock DPI"** option that sets active DPI stage count to 1 (or sets all 5 DPI slots to the same preferred DPI) so accidental presses don't change cursor speed.
+- **Core library:** Refactor `src/protocol.rs` and `src/device.rs` into a shared library crate (`lib.rs`) reused by both the CLI and Tauri backend, and expand action support (full keyboard keys, combos like `cmd+c`, media keys, LED control).
