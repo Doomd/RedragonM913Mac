@@ -1,35 +1,31 @@
 # RedragonM913Mac
 
-Native macOS configurator for the **Redragon M913 Impact Elite** MMO mouse (Areson `25a7:fa07` 2.4GHz wireless / `25a7:fa08` wired) — no Windows VM or background daemon required. Changes are written directly to the mouse's onboard memory.
+Native macOS configurator for the **Redragon M913 Impact Elite** MMO mouse (Areson `25a7:fa07` 2.4GHz wireless / `25a7:fa08` wired) — built with **Tauri v2**, **SvelteKit (Svelte 5)**, **Tailwind CSS v4**, and Rust **`hidapi`**. Changes are written directly to the mouse's onboard memory (no Windows VM or background daemon required).
 
-Status: **v0.1.0 Proof of Concept working** (Rust CLI via `hidapi`; Tauri UI planned next).
+Status: **v0.2.0** — Interactive Tauri desktop app with Side & Top SVG button callouts.
 
-## Quick Start (CLI)
+## Quick Start
 
 ### Prerequisites
-- macOS with Rust (`cargo`) installed.
-- Grant **Input Monitoring** permission to your terminal app in **System Settings → Privacy & Security → Input Monitoring** (required because the mouse's config HID interface also advertises a keyboard usage).
+- macOS with **Node.js** (v22+) and **Rust** (`cargo`) installed.
+- Grant **Input Monitoring** permission to your terminal app (when running `tauri dev`) or the built `.app` bundle in **System Settings → Privacy & Security → Input Monitoring**.
 
-### Build & Run
+### Run in Development Mode
 ```bash
-cargo build
+npm install
+npm run tauri dev
+```
+*(Wiggle the mouse before clicking **Read from Mouse** or **Apply to Mouse** if it has gone to sleep.)*
 
-# List detected M913 HID interfaces
-./target/debug/m913-mac list
-
-# Read all 16 current onboard button mappings (wiggle mouse so it's awake)
-./target/debug/m913-mac read
-
-# Remap buttons (preserves all untouched buttons and commits to onboard flash)
-./target/debug/m913-mac remap side11=option side12=control
-
-# Revert side11/side12 back to factory defaults
-./target/debug/m913-mac remap side11=numplus side12=numminus
+### Build macOS App Bundle
+```bash
+npm run tauri build
 ```
 
 ## Notes
 - Works directly over the **2.4GHz USB wireless receiver** (`VID: 0x25A7`, `PID: 0xFA07`) without `sudo`.
 - USB-C to USB-C cables do not work with the M913 (missing CC resistors); wired mode requires USB-A to USB-C.
+- The 16 programmable buttons are the **12 side buttons + Left, Right, Middle, and Fire**. The two central DPI buttons are hardcoded in firmware.
 - Protocol reference: [Qehbr/m913-ctl](https://github.com/Qehbr/m913-ctl).
 
 See [docs/DEVLOG.md](docs/DEVLOG.md) and [CHANGELOG.md](CHANGELOG.md).

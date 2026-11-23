@@ -26,8 +26,19 @@
 - **Read-back (`./target/debug/m913-mac read`):** Successfully read all 16 buttons over the 2.4GHz dongle (factory defaults: `side1`–`side10` = `1`–`0`, `side11` = `numplus` (`0x57`), `side12` = `numminus` (`0x56`), `fire` = `04 14 03 3a` triple-click speed 20).
 - **Remap (`./target/debug/m913-mac remap side11=option side12=control`):** Successfully remapped `side11` → macOS **Option** (Left Alt `0x04`) and `side12` → macOS **Control** (Left Ctrl `0x01`), preserving all other buttons and committing to onboard memory. Verified both modifiers work natively on macOS.
 
+## 2026-11-23 (v0.2.0) — Tauri v2 + SvelteKit + Tailwind CSS v4 App
+
+### What Was Built
+- Cropped clean copies of the reference mouse images into `static/images/side.webp` (`1346×600`) and `static/images/top.webp` (`900×1160`, USB cable & dongle cropped out).
+- Scaffolded a **Tauri v2** desktop app with **Svelte 5 / SvelteKit** (`@sveltejs/adapter-static` SPA mode) and **Tailwind CSS v4** (`@tailwindcss/vite`).
+- Moved the M913 HID protocol and macOS `hidapi` driver into `src-tauri/src/m913/` and exposed Tauri commands:
+  - `get_factory_defaults`, `read_mappings`, `apply_mappings`, `reset_all_defaults`.
+- Built an interactive **SVG vector circle callout** UI overlaid on both the Side View (12 buttons) and Top View (4 buttons):
+  - **White circle** = factory default; **Green circle** = remapped from default (yellow ring for unsaved staged edits).
+  - Clicking any button opens the inspector panel with quick macOS system modifiers (`⌥ Option`, `⌃ Control`, `⌘ Command`, `⇧ Shift`), **Capture Key Press**, full key/mouse action dropdown, and single-button **Reset to Default**.
+  - Top toolbar has **Read from Mouse**, **Factory Reset All**, and **Apply to Mouse**.
+
 ### Next Steps
-- **Tauri UI (v0.2):** Cropped copies of `images/side.webp` and `images/top.webp` (cable/dongle removed) with interactive SVG circle callouts (white = factory default, green = remapped). Clicking any button lets you remap it (standard keys, macOS modifiers, mouse actions, disabled) or reset that button to default, plus one-click **Reset All to Factory Defaults**.
-- **Profiles:** Save/load named collections of button mappings as local JSON profiles, always keeping a built-in Factory Default profile.
+- **Profiles (v0.3):** Save/load named collections of button mappings as local JSON profiles, with a built-in Factory Default profile.
 - **DPI buttons note (pinned for later):** The two physical DPI+/DPI- buttons behind the scroll wheel are hardcoded in firmware (not in the 16-button remap table; even Redragon's Windows software cannot remap them). **Workaround:** add a **"Lock DPI"** option that sets active DPI stage count to 1 (or sets all 5 DPI slots to the same preferred DPI) so accidental presses don't change cursor speed.
-- **Core library:** Refactor `src/protocol.rs` and `src/device.rs` into a shared library crate (`lib.rs`) reused by both the CLI and Tauri backend, and expand action support (full keyboard keys, combos like `cmd+c`, media keys, LED control).
+- **Extra features:** Key combos (e.g. `cmd+c`), media keys, and LED control.
