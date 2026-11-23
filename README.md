@@ -1,22 +1,35 @@
 # RedragonM913Mac
 
-Goal: configure the Redragon M913 Impact Elite MMO mouse (button mappings, including the left-side "fire" triple-click button) natively on macOS, without Redragon's Windows-only software.
+Native macOS configurator for the **Redragon M913 Impact Elite** MMO mouse (Areson `25a7:fa07` 2.4GHz wireless / `25a7:fa08` wired) — no Windows VM or background daemon required. Changes are written directly to the mouse's onboard memory.
 
-Status: **parked idea** (23 Nov 2026). Not a priority yet; notes only.
+Status: **v0.1.0 Proof of Concept working** (Rust CLI via `hidapi`; Tauri UI planned next).
 
-## What we know
-- Mouse used wireless via the 2.4GHz USB-A dongle plus a USB-C to A adapter.
-- C-to-C cable (even a good iPhone data cable) does nothing: the mouse's USB-C port lacks the CC resistors, so it only works with A-to-C. The Mac showed no USB device at all on C-to-C.
-- The fire button (left of left-click) sends triple-click from **firmware**; macOS only sees ordinary left clicks, so no Mac remapper can change it. It must be reprogrammed into the mouse's onboard memory.
-- Side buttons mostly send keys 1 to 0 by default; Karabiner-Elements or Mac Mouse Fix can remap those on macOS now.
-- Wine/CrossOver can't pass USB through, so Redragon's software likely won't see the mouse.
-- A Windows 11 Arm VM in UTM with USB passthrough would work as a one-off: set mappings once, they persist on the mouse.
+## Quick Start (CLI)
 
-## Plan (when picked back up)
-1. Search for existing M913 protocol work (GitHub, forums, OpenRGB/libratbag-style projects for Redragon).
-2. Static route: download Redragon's M913 installer, unpack and decompile it on the Mac (often .NET, so readable), and find the HID feature/output reports it sends.
-3. Live route: enumerate the dongle's HID interfaces on macOS (hidapi/ioreg), then carefully send test reports. Small risk of scrambling settings; a factory reset usually fixes it.
-4. Optional shortcut: record USB traffic from Redragon's software in a UTM Windows VM.
-5. Build a small CLI (Python + hidapi likely) to read and write button mappings, especially the fire button.
+### Prerequisites
+- macOS with Rust (`cargo`) installed.
+- Grant **Input Monitoring** permission to your terminal app in **System Settings → Privacy & Security → Input Monitoring** (required because the mouse's config HID interface also advertises a keyboard usage).
 
-See CHANGELOG.md.
+### Build & Run
+```bash
+cargo build
+
+# List detected M913 HID interfaces
+./target/debug/m913-mac list
+
+# Read all 16 current onboard button mappings (wiggle mouse so it's awake)
+./target/debug/m913-mac read
+
+# Remap buttons (preserves all untouched buttons and commits to onboard flash)
+./target/debug/m913-mac remap side11=option side12=control
+
+# Revert side11/side12 back to factory defaults
+./target/debug/m913-mac remap side11=numplus side12=numminus
+```
+
+## Notes
+- Works directly over the **2.4GHz USB wireless receiver** (`VID: 0x25A7`, `PID: 0xFA07`) without `sudo`.
+- USB-C to USB-C cables do not work with the M913 (missing CC resistors); wired mode requires USB-A to USB-C.
+- Protocol reference: [Qehbr/m913-ctl](https://github.com/Qehbr/m913-ctl).
+
+See [docs/DEVLOG.md](docs/DEVLOG.md) and [CHANGELOG.md](CHANGELOG.md).
