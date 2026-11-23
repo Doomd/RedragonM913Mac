@@ -324,7 +324,7 @@
 					<h2 class="text-xs font-semibold uppercase tracking-wider text-zinc-400">
 						Top View (4 Buttons)
 					</h2>
-					<span class="text-[11px] text-zinc-500">DPI buttons are fixed</span>
+					<span class="text-[11px] text-zinc-500">Click any circle to remap</span>
 				</div>
 
 				<div class="relative w-full max-w-[340px] mx-auto my-auto rounded-lg bg-zinc-950/60 p-2">
@@ -396,6 +396,10 @@
 						{/each}
 					</svg>
 				</div>
+
+				<p class="mt-3 text-[11px] leading-relaxed text-zinc-500">
+					Note: The two center DPI+/DPI− buttons are hardcoded in the M913 firmware and cannot be remapped (even in Redragon's Windows software).
+				</p>
 			</section>
 		</div>
 
