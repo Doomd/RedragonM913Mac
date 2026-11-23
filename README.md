@@ -7,19 +7,19 @@ Status: **v0.2.0** — Interactive Tauri desktop app with Side & Top SVG button 
 ## Quick Start
 
 ### Prerequisites
-- macOS with **Node.js** (v22+) and **Rust** (`cargo`) installed.
+- macOS with **Bun** and **Rust** (`cargo`) installed.
 - Grant **Input Monitoring** permission to your terminal app (when running `tauri dev`) or the built `.app` bundle in **System Settings → Privacy & Security → Input Monitoring**.
 
 ### Run in Development Mode
 ```bash
-npm install
-npm run tauri dev
+bun install
+bun run tauri dev
 ```
 *(Wiggle the mouse before clicking **Read from Mouse** or **Apply to Mouse** if it has gone to sleep.)*
 
 ### Build macOS App Bundle
 ```bash
-npm run tauri build
+bun run tauri build
 ```
 
 ## Notes
