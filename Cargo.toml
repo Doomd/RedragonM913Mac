@@ -1,0 +1,7 @@
+[package]
+name = "m913-mac"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+hidapi = { version = "2.6", features = ["macos-shared-device"] }
