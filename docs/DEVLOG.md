@@ -30,13 +30,13 @@
 
 ### What Was Built
 - Cropped clean copies of the reference mouse images into `static/images/side.webp` (`1346×600`) and `static/images/top.webp` (`900×1160`, USB cable & dongle cropped out).
-- Scaffolded a **Tauri v2** desktop app with **Svelte 5 / SvelteKit** (`@sveltejs/adapter-static` SPA mode) and **Tailwind CSS v4** (`@tailwindcss/vite`).
+- Scaffolded a **Tauri v2** desktop app with **Svelte 5 / SvelteKit** (`@sveltejs/adapter-static` SPA mode), **Tailwind CSS v4** (`@tailwindcss/vite`), and **Bun** (`bun.lock`).
 - Moved the M913 HID protocol and macOS `hidapi` driver into `src-tauri/src/m913/` and exposed Tauri commands:
-  - `get_factory_defaults`, `read_mappings`, `apply_mappings`, `reset_all_defaults`.
+  - `get_factory_defaults`, `read_mappings`, `apply_mappings`, `reset_all_defaults`, `open_repo`.
 - Built an interactive **SVG vector circle callout** UI overlaid on both the Side View (12 buttons) and Top View (4 buttons):
   - **White circle** = factory default; **Green circle** = remapped from default (yellow ring for unsaved staged edits).
   - Clicking any button opens the inspector panel with quick macOS system modifiers (`⌥ Option`, `⌃ Control`, `⌘ Command`, `⇧ Shift`), **Capture Key Press**, full key/mouse action dropdown, and single-button **Reset to Default**.
-  - Top toolbar has **Read from Mouse**, **Factory Reset All**, and **Apply to Mouse**.
+  - Top toolbar has **Read from Mouse**, **Factory Reset All**, **Apply to Mouse**, and a **GitHub** repo link; Top View includes a footnote explaining that the two DPI buttons are firmware-fixed.
 
 ### Next Steps
 - **Profiles (v0.3):** Save/load named collections of button mappings as local JSON profiles, with a built-in Factory Default profile.
