@@ -37,6 +37,16 @@ fn reset_all_defaults() -> Result<Vec<ButtonState>, String> {
     dev.apply_mappings(&updates)
 }
 
+#[tauri::command]
+fn open_repo() -> Result<(), String> {
+    const REPO_URL: &str = "https://github.com/Doomd/RedragonM913Mac";
+    std::process::Command::new("open")
+        .arg(REPO_URL)
+        .spawn()
+        .map_err(|e| format!("Failed to open browser: {e}"))?;
+    Ok(())
+}
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
@@ -44,7 +54,8 @@ pub fn run() {
             get_factory_defaults,
             read_mappings,
             apply_mappings,
-            reset_all_defaults
+            reset_all_defaults,
+            open_repo
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
