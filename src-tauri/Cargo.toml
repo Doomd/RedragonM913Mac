@@ -1,0 +1,17 @@
+[package]
+name = "redragon-m913-mac"
+version = "0.2.0"
+edition = "2021"
+
+[lib]
+name = "redragon_m913_mac_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = [] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+hidapi = { version = "2.6", features = ["macos-shared-device"] }
